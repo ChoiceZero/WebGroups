@@ -68,15 +68,16 @@ class WebGroups(QMainWindow):
     def initTab1(self):
         layout = QHBoxLayout(self.tab1)
         self.list_webs = QListWidget()
-        self.list_webs_label = QLabel(self.loadLanguage('list_webs_label'))
+        self.list_webs_label = QLabel(self.loadLanguage('title'))
         self.list_webs_label.setStyleSheet("font-size: 20px; font-weight: bold;")
         self.list_webs_label.setAlignment(Qt.AlignLeft)
-        self.len_webs_label = QLabel('Web number: '+'0')
+        self.len_webs_label = QLabel(self.loadLanguage('title')+ ": 0")
+        self.len_webs_label.setAlignment(Qt.AlignRight)
         self.bottom_label_1 = QLabel(self.loadLanguage3('about_text'))
         self.bottom_label_1.setStyleSheet("font-size: 12px; color: gray;")
         self.bottom_label_1.setAlignment(Qt.AlignRight)
-        self.options_label = QLabel(self.loadLanguage('options_label'))
-        self.options_label.setStyleSheet("font-size: 20px; font-weight: bold;")
+        self.tools_label = QLabel(self.loadLanguage('options_label'))
+        self.tools_label.setStyleSheet("font-size: 20px; font-weight: bold;")
         self.button_web_add = QPushButton(self.loadLanguage('button_web_add'))
         self.button_YT_add = QPushButton(self.loadLanguage('button_YT_add'))
         self.button_YT_pl_add = QPushButton(self.loadLanguage('button_YT_pl_add'))
@@ -104,8 +105,8 @@ class WebGroups(QMainWindow):
 
         col_1 = QVBoxLayout()
         row = QHBoxLayout()
-        row.addWidget(self.list_webs_label,stretch = 7)
-        row.addWidget(self.len_webs_label,stretch = 1)
+        row.addWidget(self.list_webs_label)
+        row.addWidget(self.len_webs_label)
         col_1.addLayout(row)
         col_1.addWidget(self.list_webs)
 
@@ -128,7 +129,7 @@ class WebGroups(QMainWindow):
         row_4.addWidget(self.button_clear)
 
         col_3 = QVBoxLayout()
-        col_3.addWidget(self.options_label)
+        col_3.addWidget(self.tools_label)
         col_3.addWidget(self.divider)
         col_3.addLayout(row_3)   
         col_3.addLayout(row_1)
@@ -279,10 +280,10 @@ class WebGroups(QMainWindow):
         with open('settings.json', 'w', encoding = 'utf-8') as file:
             json.dump(self.settings, file, ensure_ascii = False)
         self.LanguagePack = self.LanguagePacks[self.settings['language']]
-        self.list_webs_label.setText(self.loadLanguage('list_webs_label'))
+        self.list_webs_label.setText(self.loadLanguage('title'))
         self.list_groups_label.setText(self.loadLanguage('list_groups_label'))
         self.bottom_label_1.setText(self.loadLanguage3('about_text'))
-        self.options_label.setText(self.loadLanguage('options_label'))
+        self.tools_label.setText(self.loadLanguage('options_label'))
         self.button_web_add.setText(self.loadLanguage('button_web_add'))
         self.button_YT_add.setText(self.loadLanguage('button_YT_add'))
         self.button_YT_pl_add.setText(self.loadLanguage('button_YT_pl_add'))
@@ -303,6 +304,7 @@ class WebGroups(QMainWindow):
         self.button_editWebUrl.setText(self.loadLanguage('button_editWebUrl'))
         self.options_label.setText(self.loadLanguage3('options_label'))
         self.lang_group.setTitle(self.loadLanguage3('language_label'))
+        self.list_groups_label.setText(self.loadLanguage('list_groups_label'))
         #self.theme_group.setTitle(self.loadLanguage3('theme_label'))
         #self.font_group.setTitle(self.loadLanguage3('font_size_label'))
         #self.startup_group.setTitle(self.loadLanguage3('startup_label'))
@@ -437,7 +439,7 @@ class WebGroups(QMainWindow):
             self.list_webs.clear()
             self.list_groups.clear()
             self.list_groups.addItems(self.collections)
-            self.len_webs_label.setText('Web number: '+'0')
+            self.len_webs_label.setText(self.loadLanguage("title") + ": 0")
             with open('webs_data.json', 'w', encoding = 'utf-8') as file:
                 json.dump(self.collections, file, sort_keys = True)
 
@@ -462,7 +464,7 @@ class WebGroups(QMainWindow):
                 key = self.list_groups.selectedItems()[0].text()
                 self.collections[key][web_name] = {'URL': web_url, 'Description': ''}
                 self.list_webs.addItem(web_name) 
-                self.len_webs_label.setText('Web number: '+str(len(self.collections[key])))
+                self.len_webs_label.setText(self.loadLanguage("title") + ":",str(len(self.collections[key])))
         with open('webs_data.json', 'w', encoding = 'utf-8') as file:
             json.dump(self.collections, file, ensure_ascii = False)
 
@@ -485,7 +487,7 @@ class WebGroups(QMainWindow):
             self.list_groups.clear()
             self.list_webs.addItems(self.collections[key])
             self.list_groups.addItems(self.collections)
-            self.len_webs_label.setText('Web number: '+str(len(self.collections[key])+1))
+            self.len_webs_label.setText(self.loadLanguage("title") + ":",str(len(self.collections[key])))
             with open('webs_data.json', 'w', encoding = 'utf-8') as file:
                 json.dump(self.collections, file, ensure_ascii = False)
 
@@ -517,10 +519,10 @@ class WebGroups(QMainWindow):
         if self.list_groups.selectedItems():
             key = self.list_groups.selectedItems()[0].text()             
             with open('webs_data.json', 'r', encoding = 'utf-8') as file:
-                collections = json.load(file)
+                self.collections = json.load(file)
             self.list_webs.clear()
-            self.list_webs.addItems(collections[key])
-            self.len_webs_label.setText('Web number: '+str(len(collections[key])))
+            self.list_webs.addItems(self.collections[key])
+            self.len_webs_label.setText(self.loadLanguage("title") + ":",str(len(self.collections[key])))
 
     def apply_theme(self):
         theme = self.theme_combo.currentText()
