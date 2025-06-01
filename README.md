@@ -1,4 +1,4 @@
-# Release beta-v1
+# WebGroups
 
 This is a program to store groups of websites and to visualize them. 
 Either for a student, worker or personal user, it is a convenient way to replace bookmars on browsers by storing them locally in esay to use groups. No need to struggle searching in the confusing bookmark tabs of, for example, Chrome.
