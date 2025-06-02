@@ -6,6 +6,9 @@ It can even store youtube playlists and videos!
 > [!NOTE]
 > The basic and first release of the app is availabe for the moment. Doesn't have a lot of customization, but the base functionality is there.
 
+> [!CAUTION]
+> MICROSOFT VISUAL C++ REDISTRIBUITABLES NEED TO BE INSTALLED.
+
 ### Web tree
 - Group creation, deletion and edition.
 - Web creation, deletion and edition.
